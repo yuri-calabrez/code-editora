@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\Http\Requests\BookRequest;
+use Auth;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -18,9 +20,11 @@ class BooksController extends Controller
         return view('books.create');
     }
 
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        Book::create($request->all());
+        $data = $request->all();
+        $data['user_id'] = Auth::user()->id;
+        Book::create($data);
         return redirect()->route('books.index');
     }
 
@@ -29,9 +33,10 @@ class BooksController extends Controller
         return view('books.edit', compact('book'));
     }
 
-    public function update(Request $request, Book $book)
+    public function update(BookRequest $request, Book $book)
     {
-        $book->fill($request->all());
+        $data = $request->except('user_id');
+        $book->fill($data);
         $book->save();
         return redirect()->route('books.index');
     }

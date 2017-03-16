@@ -8,24 +8,27 @@
             {!! Form::model($book, ['route' => ['books.update', 'book' => $book->id],
             'method' => 'PUT', 'class' => 'form']) !!}
 
-            <div class="form-group">
-                {!! Form::label('title', 'Titulo') !!}
-                {!! Form::text('title', null, ['class' => 'form-control', 'required']) !!}
-            </div>
+                {!! Html::openFormGroup('title', $errors) !!}
+                    {!! Form::label('title', 'Titulo', ['class' => 'control-label']) !!}
+                    {!! Form::text('title', null, ['class' => 'form-control']) !!}
+                    {!! Form::error('title', $errors) !!}
+                {!! Html::closeFormGroup() !!}
 
-            <div class="form-group">
-                {!! Form::label('subtitle', 'Subtitulo') !!}
-                {!! Form::text('subtitle', null, ['class' => 'form-control', 'required']) !!}
-            </div>
+                {!! Html::openFormGroup('subtitle', $errors) !!}
+                    {!! Form::label('subtitle', 'Subtitulo') !!}
+                    {!! Form::text('subtitle', null, ['class' => 'form-control']) !!}
+                    {!! Form::error('subtitle', $errors) !!}
+                {!! Html::closeFormGroup() !!}
 
-            <div class="form-group">
-                {!! Form::label('price', 'Valor') !!}
-                {!! Form::text('price', null, ['class' => 'form-control', 'required']) !!}
-            </div>
+                {!! Html::openFormGroup('price', $errors) !!}
+                    {!! Form::label('price', 'Valor') !!}
+                    {!! Form::text('price', null, ['class' => 'form-control']) !!}
+                    {!! Form::error('price', $errors) !!}
+                {!! Html::closeFormGroup() !!}
 
-            <div class="form-group">
-                {!! Form::submit('Editar livro', ['class' => 'btn btn-primary']) !!}
-            </div>
+                {!! Html::openFormGroup() !!}
+                    {!! Form::submit('Editar livro', ['class' => 'btn btn-primary']) !!}
+                {!! Html::closeFormGroup() !!}
 
             {!! Form::close() !!}
         </div>
