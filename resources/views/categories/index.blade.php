@@ -4,42 +4,27 @@
     <div class="container">
         <div class="row">
             <h3>Listagem de categorias</h3>
-            <a href="{{route('categories.create')}}" class="btn btn-primary" title="Criar nova categoria">Nova
-                categoria</a>
+            {!! Button::primary('Nova categoria')->asLinkTo(route('categories.create')) !!}
         </div>
 
         <div class="row">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th>Editar</th>
-                    <th>Remover</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($categories as $category)
-                    <tr>
-                        <td>{{ $category->id }}</td>
-                        <td>{{ $category->name }}</td>
-                        <td><a href="{{ route('categories.edit', ['category' => $category->id]) }}"
-                               class="btn btn-primary">Editar</a></td>
-                        <td>
-                            <?php $deleteForm = "delete-form-{$loop->index}"; ?>
+            {!!
+                Table::withContents($categories->items())->striped()
+                ->callback('Editar', function($field, $category){
+                    return Button::primary('Editar')->asLinkTo(route('categories.edit', ['category' => $category->id]));
+                })
+                ->callback('Remover', function ($field, $category){
+                    $deleteForm = "delete-form-{$category->id}";
+                    $form = Form::open(['route' => ['categories.destroy', 'category' => $category->id],
+                             'method' => 'DELETE', 'style' => 'display:none', 'id' => $deleteForm]).
+                             Form::close();
 
-                            <a href="{{ route('categories.destroy', ['category' => $category->id]) }}"
-                               onclick="event.preventDefault(); document.getElementById('{{ $deleteForm }}').submit();"
-                               class="btn btn-danger">Remover</a>
-
-                            {!! Form::open(['route' => ['categories.destroy', 'category' => $category->id],
-                             'method' => 'DELETE', 'style' => 'display:none', 'id' => $deleteForm]) !!}
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    return Button::danger('Remover')->asLinkTo(route('categories.destroy', ['category' => $category->id]))
+                            ->addAttributes([
+                                'onclick' => "event.preventDefault(); document.getElementById(\"{$deleteForm}\").submit();"
+                            ]).$form;
+                })
+            !!}
 
             {{ $categories->links() }}
         </div>

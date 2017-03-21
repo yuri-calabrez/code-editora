@@ -10,7 +10,8 @@
         "caouecs/laravel-lang": "~3.0",
         "doctrine/dbal": "^2.5",
         "laravel/framework": "5.3.*",
-        "laravelcollective/html": "^5.3.0"
+        "laravelcollective/html": "^5.3.0",
+        "patricktalmadge/bootstrapper": "~5.9.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -8,41 +8,23 @@
         </div>
 
         <div class="row">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Titulo</th>
-                    <th>Subtitulo</th>
-                    <th>Valor</th>
-                    <th>Editar</th>
-                    <th>Remover</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($books as $book)
-                    <tr>
-                        <td>{{ $book->id }}</td>
-                        <td>{{ $book->title }}</td>
-                        <td>{{ $book->subtitle }}</td>
-                        <td>{{ number_format($book->price, 2, ',', '.') }}</td>
-                        <td><a href="{{ route('books.edit', ['book' => $book->id]) }}"
-                               class="btn btn-primary">Editar</a></td>
-                        <td>
-                            <?php $deleteForm = "delete-form-{$loop->index}"; ?>
+            {!!
+                Table::withContents($books->items())->striped()
+                    ->callback('Editar', function ($field, $book){
+                        return Button::primary('Editar')->asLinkTo(route('books.edit', ['book' => $book->id]));
+                    })
+                    ->callback('Remover', function ($field, $book){
+                        $deleteForm = "delete-form-{$book->id}";
+                        $form = Form::open(['route' => ['books.destroy', 'book' => $book->id],
+                             'method' => 'DELETE', 'style' => 'display:none', 'id' => $deleteForm]).
+                             Form::close();
 
-                            <a href="{{ route('books.destroy', ['book' => $book->id]) }}"
-                               onclick="event.preventDefault(); document.getElementById('{{ $deleteForm }}').submit();"
-                               class="btn btn-danger">Remover</a>
-
-                            {!! Form::open(['route' => ['books.destroy', 'book' => $book->id],
-                             'method' => 'DELETE', 'style' => 'display:none', 'id' => $deleteForm]) !!}
-                            {!! Form::close() !!}
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+                         return Button::danger('Remover')->asLinkTo(route('books.destroy', ['book' => $book->id]))
+                                ->addAttributes([
+                                    'onclick' => "event.preventDefault(); document.getElementById(\"{$deleteForm}\").submit();"
+                                ]).$form;
+                    })
+            !!}
 
             {{ $books->links() }}
         </div>

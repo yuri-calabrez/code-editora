@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'Code Editora',
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,7 @@ return [
          */
         //Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Bootstrapper\BootstrapperL5ServiceProvider::class,
         //
 
         /*
@@ -228,6 +229,29 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Accordion' => Bootstrapper\Facades\Accordion::class,
+        'Alert' => Bootstrapper\Facades\Alert::class,
+        'Badge' => Bootstrapper\Facades\Badge::class,
+        'Breadcrumb' => Bootstrapper\Facades\Breadcrumb::class,
+        'Button' => Bootstrapper\Facades\Button::class,
+        'ButtonGroup' => Bootstrapper\Facades\ButtonGroup::class,
+        'Carousel' => Bootstrapper\Facades\Carousel::class,
+        'ControlGroup' => Bootstrapper\Facades\ControlGroup::class,
+        'DropdownButton' => Bootstrapper\Facades\DropdownButton::class,
+        'Helpers' => Bootstrapper\Facades\Helpers::class,
+        'Icon' => Bootstrapper\Facades\Icon::class,
+        'InputGroup' => Bootstrapper\Facades\InputGroup::class,
+        'Image' => Bootstrapper\Facades\Image::class,
+        'Label' => Bootstrapper\Facades\Label::class,
+        'MediaObject' => Bootstrapper\Facades\MediaObject::class,
+        'Modal' => Bootstrapper\Facades\Modal::class,
+        'Navbar' => Bootstrapper\Facades\Navbar::class,
+        'Navigation' => Bootstrapper\Facades\Navigation::class,
+        'Panel' => Bootstrapper\Facades\Panel::class,
+        'ProgressBar' => Bootstrapper\Facades\ProgressBar::class,
+        'Tabbable' => Bootstrapper\Facades\Tabbable::class,
+        'Table' => Bootstrapper\Facades\Table::class,
+        'Thumbnail' => Bootstrapper\Facades\Thumbnail::class,
     ],
 
 ];
