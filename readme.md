@@ -19,3 +19,7 @@ A edição dos dados do livro só poderá ser feita pelo próprio autor, então,
 Nesta fase você deverá aplicar o Bootstrapper nos CRUD de categorias e livros.
 
 Além disto quando o usuário enviar dados via formulário e estes dados forem inválidos e logo em seguida o cadastro for realizado, o usuário deve ser direcionado para a página anterior (Lembrando que no momento isto não ocorre, porque se os dados forem inválidos, a URL armazenada será a da própria página).
+
+## Fase 4 - Repositories e Criterias
+
+Nesta fase você deverá refatorar toda aplicação para trabalhar com repositories e criar buscas na listagem de livros e categorias

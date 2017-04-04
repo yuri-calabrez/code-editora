@@ -1,18 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace CodePub\Http\Controllers;
 
-use App\Book;
-use App\Http\Requests\BookRequest;
+use CodePub\Http\Requests\BookCreateRequest;
+use CodePub\Http\Requests\BookUpdateRequest;
+use CodePub\Repositories\BookRepository;
 use Auth;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
-    public function index()
+    /**
+     * @var BookRepository
+     */
+    private $repository;
+
+    function __construct(BookRepository $repository)
     {
-        $books = Book::orderBy('id', 'desc')->paginate(15);
-        return view('books.index', compact('books'));
+        $this->repository = $repository;
+    }
+
+    public function index(Request $request)
+    {
+        $search = $request->get('search');
+        //$this->repository->pushCriteria(new FindByTitleCriteria($search));
+        $books = $this->repository->orderBy('id', 'desc')->paginate(15);
+        return view('books.index', compact('books', 'search'));
     }
 
     public function create()
@@ -20,34 +33,34 @@ class BooksController extends Controller
         return view('books.create');
     }
 
-    public function store(BookRequest $request)
+    public function store(BookCreateRequest $request)
     {
         $data = $request->all();
-        $data['user_id'] = Auth::user()->id;
-        Book::create($data);
+        $data['author_id'] = Auth::user()->id;
+        $this->repository->create($data);
         $url = $request->get('redirectTo', route('books.index'));
         $request->session()->flash('message', 'Livro cadastrado com sucesso!');
         return redirect()->to($url);
     }
 
-    public function edit(Book $book)
+    public function edit($id)
     {
+        $book = $this->repository->find($id);
         return view('books.edit', compact('book'));
     }
 
-    public function update(BookRequest $request, Book $book)
+    public function update(BookUpdateRequest $request, $id)
     {
-        $data = $request->except('user_id');
-        $book->fill($data);
-        $book->save();
+        $data = $request->except('author_id');
+        $this->repository->update($data, $id);
         $url = $request->get('redirectTo', route('books.index'));
         $request->session()->flash('message', 'Livro editado com sucesso!');
         return redirect()->to($url);
     }
 
-    public function destroy(Book $book)
+    public function destroy($id)
     {
-        $book->delete();
+        $this->repository->delete($id);
         \Session::flash('message', 'Livro removido com sucesso!');
         return redirect()->to(\URL::previous());
     }

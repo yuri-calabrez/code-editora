@@ -1,23 +1,13 @@
 <?php
 
-namespace App;
+namespace CodePub\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model implements TableInterface
+class Category extends Model implements TableInterface
 {
-    protected $fillable = [
-        'title',
-        'subtitle',
-        'price',
-        'user_id'
-    ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $fillable = ['name'];
 
     /**
      * A list of headers to be used when a table is displayed
@@ -26,7 +16,7 @@ class Book extends Model implements TableInterface
      */
     public function getTableHeaders()
     {
-        return ['#', 'Título', 'Subtitulo', 'Valor'];
+        return ['#', 'Nome'];
     }
 
     /**
@@ -41,12 +31,8 @@ class Book extends Model implements TableInterface
         switch ($header) {
             case '#':
                 return $this->id;
-            case 'Título':
-                return $this->title;
-            case 'Subtitulo':
-                return $this->subtitle;
-            case 'Valor':
-                return number_format($this->price, 2, ',', '.');
+            case 'Nome':
+                return $this->name;
         }
     }
 }
