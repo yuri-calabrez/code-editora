@@ -9,6 +9,11 @@ class Category extends Model implements TableInterface
 {
     protected $fillable = ['name'];
 
+    public function books()
+    {
+        return $this->belongsToMany(Book::class);
+    }
+
     /**
      * A list of headers to be used when a table is displayed
      *

@@ -6,6 +6,7 @@ use CodePub\Http\Requests\BookCreateRequest;
 use CodePub\Http\Requests\BookUpdateRequest;
 use CodePub\Repositories\BookRepository;
 use Auth;
+use CodePub\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
@@ -14,10 +15,15 @@ class BooksController extends Controller
      * @var BookRepository
      */
     private $repository;
+    /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
 
-    function __construct(BookRepository $repository)
+    function __construct(BookRepository $repository, CategoryRepository $categoryRepository)
     {
         $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function index(Request $request)
@@ -30,7 +36,8 @@ class BooksController extends Controller
 
     public function create()
     {
-        return view('books.create');
+        $categories = $this->categoryRepository->lists('name', 'id');
+        return view('books.create', compact('categories'));
     }
 
     public function store(BookCreateRequest $request)
@@ -46,7 +53,8 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book = $this->repository->find($id);
-        return view('books.edit', compact('book'));
+        $categories = $this->categoryRepository->lists('name', 'id');
+        return view('books.edit', compact('book', 'categories'));
     }
 
     public function update(BookUpdateRequest $request, $id)

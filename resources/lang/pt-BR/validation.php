@@ -146,6 +146,8 @@ return [
         'year'                  => 'ano',
         'subtitle'              => 'subtitulo',
         'price'                 => 'valor',
+        'categories'            => 'categorias',
+        'categories_*'          => 'categoria :num'
     ],
 
 ];

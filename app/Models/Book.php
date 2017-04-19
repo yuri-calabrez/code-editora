@@ -4,10 +4,13 @@ namespace CodePub\Models;
 
 use CodePub\Models\User;
 use Bootstrapper\Interfaces\TableInterface;
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model implements TableInterface
 {
+    use FormAccessible;
+
     protected $fillable = [
         'title',
         'subtitle',
@@ -18,6 +21,16 @@ class Book extends Model implements TableInterface
     public function author()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function formCategoriesAttribute()
+    {
+        return $this->categories->pluck('id')->toArray();
     }
 
     /**
