@@ -1,4 +1,4 @@
-#Desenvolvendo uma Editora Online com Laravel 5.3 - Code Education
+# Desenvolvendo uma Editora Online com Laravel 5.3 - Code Education
 ## Fase 1 - Abrindo a Editora
 Nesta fase você deverá cria o ambiente da aplicação Laravel 5.3 mostrado no capítulo inicial, bem como o CRUD de categorias.
 Você deverá criar também um CRUD para os livros da loja virtual. O model livro deverá conter os seguintes campos:
@@ -23,3 +23,13 @@ Além disto quando o usuário enviar dados via formulário e estes dados forem i
 ## Fase 4 - Repositories e Criterias
 
 Nesta fase você deverá refatorar toda aplicação para trabalhar com repositories e criar buscas na listagem de livros e categorias
+
+## Fase 5 - Exclusão lógica
+
+Nesta fase você deverá:
+
+* Criar o relacionamento entre livros e categorias
+* Adicionar na busca de livros, a oportunidade de buscar livros pelo nome de um categoria por like.
+* Implementar a exclusão lógica para livros e categorias
+* Criar a lixeira de livros
+* Estilizar as categorias excluídas quando mostradas na área de livros

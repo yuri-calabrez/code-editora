@@ -2,14 +2,18 @@
 
 namespace CodePub\Models;
 
-use CodePub\Models\User;
 use Bootstrapper\Interfaces\TableInterface;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model implements TableInterface
 {
     use FormAccessible;
+
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'title',
@@ -25,14 +29,13 @@ class Book extends Model implements TableInterface
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class)->withTrashed();
     }
 
     public function formCategoriesAttribute()
     {
-        return $this->categories->pluck('id')->toArray();
+        return $this->categories->pluck('id')->all();
     }
-
     /**
      * A list of headers to be used when a table is displayed
      *

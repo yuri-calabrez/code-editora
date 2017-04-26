@@ -31,8 +31,17 @@
                 'title' => 'Categorias'
             ],
             [
-                'link' => route('books.index'),
-                'title' => 'Livros'
+                'Livros',
+                [
+                    [
+                        'link' => route('books.index'),
+                        'title' => 'Listar'
+                    ],
+                    [
+                        'link' => route('trashed.books.index'),
+                        'title' => 'Lixeira'
+                    ]
+                ]
             ]
         ]);
         $logout = Navigation::links([

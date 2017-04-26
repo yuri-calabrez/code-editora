@@ -53,7 +53,8 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book = $this->repository->find($id);
-        $categories = $this->categoryRepository->lists('name', 'id');
+        $this->categoryRepository->withTrashed();
+        $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
         return view('books.edit', compact('book', 'categories'));
     }
 

@@ -28,7 +28,7 @@
                              'method' => 'DELETE', 'style' => 'display:none', 'id' => $deleteForm]).
                              Form::close();
 
-                         return Button::danger('Remover')->asLinkTo(route('books.destroy', ['book' => $book->id]))
+                         return Button::danger('Remover para lixeira')->asLinkTo(route('books.destroy', ['book' => $book->id]))
                                 ->addAttributes([
                                     'onclick' => "event.preventDefault(); document.getElementById(\"{$deleteForm}\").submit();"
                                 ]).$form;
