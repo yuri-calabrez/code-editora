@@ -1,0 +1,15 @@
+{
+    "name": "yuri-calabrez/codeedubook",
+    "description": "",
+    "authors": [
+        {
+            "name": "Yuri Calabrez",
+            "email": "yuri.calabrez@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "CodeEduBook\\": ""
+        }
+    }
+}

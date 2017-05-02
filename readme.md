@@ -33,3 +33,7 @@ Nesta fase você deverá:
 * Implementar a exclusão lógica para livros e categorias
 * Criar a lixeira de livros
 * Estilizar as categorias excluídas quando mostradas na área de livros
+
+## Fase 6 - Criando primeiro módulo
+
+Nesta fase, você deverá criar o módulo de administração de livros e categorias como demonstrado no capítulo.
