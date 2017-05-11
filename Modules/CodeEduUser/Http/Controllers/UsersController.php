@@ -1,19 +1,19 @@
 <?php
 
-namespace CodeEduBook\Http\Controllers;
+namespace CodeEduUser\Http\Controllers;
 
-use CodeEduBook\Http\Requests\CategoryRequest;
-use CodeEduBook\Repositories\CategoryRepository;
+use CodeEduUser\Http\Requests\UserRequest;
+use CodeEduUser\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class UsersController extends Controller
 {
     /**
-     * @var \CodeEduBook\Repositories\CategoryRepository
+     * @var \CodeEduUser\Repositories\UserRepository
      */
     private $repository;
 
-    public function __construct(CategoryRepository $repository)
+    public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -26,8 +26,8 @@ class CategoriesController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        $categories = $this->repository->orderBy('id', 'desc')->paginate(10);
-        return view('codeedubook::categories.index', compact('categories', 'search'));
+        $users = $this->repository->orderBy('id', 'desc')->paginate(10);
+        return view('codeeduuser::users.index', compact('users', 'search'));
     }
 
     /**
@@ -37,7 +37,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('codeedubook::categories.create');
+        return view('codeeduuser::users.create');
     }
 
     /**
@@ -46,11 +46,11 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(UserRequest $request)
     {
         $this->repository->create($request->all());
-        $url = $request->get('redirectTo', route('categories.index'));
-        $request->session()->flash('message', 'Categoria cadastrada com sucesso!');
+        $url = $request->get('redirectTo', route('codeeduuser.users.index'));
+        $request->session()->flash('message', 'Usuário cadastrada com sucesso!');
         return redirect()->to($url);
     }
 
@@ -74,23 +74,24 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $category = $this->repository->find($id);
-        return view('codeedubook::categories.edit', compact('category'));
+        $user = $this->repository->find($id);
+        return view('codeeduuser::users.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param CategoryRequest|Request $request
+     * @param UserRequest|Request $request
      * @param $id
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $this->repository->update($request->all(), $id);
-        $url = $request->get('redirectTo', route('categories.index'));
-        $request->session()->flash('message', 'Categoria editada com sucesso!');
+        $data = $request->except('password');
+        $this->repository->update($data, $id);
+        $url = $request->get('redirectTo', route('codeeduuser.users.index'));
+        $request->session()->flash('message', 'Usuário editado com sucesso!');
         return redirect()->to($url);
     }
 
@@ -104,7 +105,7 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $this->repository->delete($id);
-        \Session::flash('message', 'Categoria removida com sucesso!');
+        \Session::flash('message', 'Usuário removido com sucesso!');
         return redirect()->to(\URL::previous());
     }
 }
