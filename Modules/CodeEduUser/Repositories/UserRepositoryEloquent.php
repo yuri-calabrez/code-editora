@@ -15,18 +15,21 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
     public function create(array $attributes)
     {
-       $attributes['password'] = User::generatePassword();
-       $model = parent::create($attributes);
-       \UserVerification::generate($model);
-       $subject = config('codeeduuser.email.user_created.subject');
-       \UserVerification::emailView('codeeduuser::emails.user-created');
-       \UserVerification::send($model, $subject);
-       return $model;
+        $attributes['password'] = User::generatePassword();
+        $model = parent::create($attributes);
+        \UserVerification::generate($model);
+        $subject = config('codeeduuser.email.user_created.subject');
+        \UserVerification::emailView('codeeduuser::emails.user-created');
+        \UserVerification::send($model, $subject);
+        return $model;
     }
 
     public function update(array $attributes, $id)
     {
-        $attributes['password'] = User::generatePassword($attributes['password']);
+        if (isset($attributes['password'])) {
+            $attributes['password'] = User::generatePassword($attributes['password']);
+        }
+
         return parent::update($attributes, $id);
     }
 
@@ -40,7 +43,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
         return User::class;
     }
 
-    
 
     /**
      * Boot up the repository, pushing criteria

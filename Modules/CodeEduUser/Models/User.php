@@ -4,12 +4,17 @@ namespace CodeEduUser\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
 use CodeEduBook\Models\Book;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements TableInterface
 {
     use Notifiable;
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +37,11 @@ class User extends Authenticatable implements TableInterface
     public function books()
     {
         return $this->hasMany(Book::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 
     public static function generatePassword($password = null)
@@ -66,5 +76,21 @@ class User extends Authenticatable implements TableInterface
             case 'E-mail':
                 return $this->email;
         }
+    }
+
+    /**
+     * @param Collection|string $role
+     * @return boolean
+     */
+    public function hasRole($role)
+    {
+        return is_string($role) ?
+            $this->roles->contains('name', $role) :
+            (boolean)$role->intersect($this->roles)->count();
+    }
+
+    public function isAdmin()
+    {
+        return $this->hasRole(config('codeeduuser.acl.role_admin'));
     }
 }

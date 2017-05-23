@@ -37,3 +37,9 @@ Nesta fase você deverá:
 ## Fase 6 - Criando primeiro módulo
 
 Nesta fase, você deverá criar o módulo de administração de livros e categorias como demonstrado no capítulo.
+
+## Fase 7 - Cmeçando com Autorização
+
+Nesta fase você deve implementar a autorização da área administrativa mostrada no capítulo e também toda parte de ACL. Além disto implemente um CRUD de Roles (só admins podem cadastrar roles).
+
+O nome da Role deve ser único no banco de dados, então é necessário validar se o nome não existe e não deve ser permitido excluir a Role Admin padrão.
