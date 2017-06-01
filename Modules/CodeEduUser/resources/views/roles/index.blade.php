@@ -27,6 +27,9 @@
                     //$anchorDestroy = $user->id == \Auth::user()->id ? '<a href="#" class="btn btn-danger disabled" title="Não é possível excluir o próprio usuário!">Remover</a>' :$anchorDestroy;
                     return $anchorDestroy.$form;
                 })
+                ->callback('Permissões', function($field, $role){
+                    return Button::primary('Permissões')->asLinkTo(route('codeeduuser.roles.permissons.edit', ['role' => $role->id]));
+                })
             !!}
 
             {{ $roles->links() }}

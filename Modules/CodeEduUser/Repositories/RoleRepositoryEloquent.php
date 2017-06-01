@@ -12,6 +12,29 @@ use Prettus\Repository\Criteria\RequestCriteria;
  */
 class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 {
+    public function update(array $attributes, $id)
+    {
+       $model = parent::update($attributes, $id);
+       if(isset($attributes['permissions'])) {
+           $model->permissions()->sync($attributes['permissions']);
+       }
+
+       return $model;
+    }
+
+    public function updatePermission(array $data, $id)
+    {
+        $role = $this->find($id);
+
+        $role->permissions()->detach();
+
+        if(count($data)) {
+            $role->permissions()->sync($data);
+        }
+
+        return $role;
+    }
+
     /**
      * Specify Model class name
      *
@@ -30,4 +53,5 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+
 }

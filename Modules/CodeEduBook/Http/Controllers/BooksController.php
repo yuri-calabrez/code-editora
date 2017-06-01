@@ -8,7 +8,11 @@ use CodeEduBook\Repositories\BookRepository;
 use Auth;
 use CodeEduBook\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
+use CodeEduUser\Annotations\Mapping as Permission;
 
+/**
+ * @Permission\Controller(name="books-admin", description="Administração de livros")
+ */
 class BooksController extends Controller
 {
     /**
@@ -26,6 +30,11 @@ class BooksController extends Controller
         $this->categoryRepository = $categoryRepository;
     }
 
+    /**
+     * @Permission\Action(name="list", description="Ver listagem de livros")
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $search = $request->get('search');
@@ -34,12 +43,21 @@ class BooksController extends Controller
         return view('codeedubook::books.index', compact('books', 'search'));
     }
 
+    /**
+     * @Permission\Action(name="create", description="Cadastrar livros")
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $categories = $this->categoryRepository->lists('name', 'id');
         return view('codeedubook::books.create', compact('categories'));
     }
 
+    /**
+     * @Permission\Action(name="create", description="Cadastrar livros")
+     * @param BookCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(BookCreateRequest $request)
     {
         $data = $request->all();
@@ -50,6 +68,11 @@ class BooksController extends Controller
         return redirect()->to($url);
     }
 
+    /**
+     * @Permission\Action(name="update", description="Atualizar livros")
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit($id)
     {
         $book = $this->repository->find($id);
@@ -58,6 +81,12 @@ class BooksController extends Controller
         return view('codeedubook::books.edit', compact('book', 'categories'));
     }
 
+    /**
+     * @Permission\Action(name="update", description="Atualizar livros")
+     * @param BookUpdateRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function update(BookUpdateRequest $request, $id)
     {
         $data = $request->except('author_id');
@@ -67,6 +96,11 @@ class BooksController extends Controller
         return redirect()->to($url);
     }
 
+    /**
+     * @Permission\Action(name="destroy", description="Excluir livros")
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($id)
     {
         $this->repository->delete($id);

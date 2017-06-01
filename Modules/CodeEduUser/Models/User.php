@@ -4,6 +4,7 @@ namespace CodeEduUser\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
 use CodeEduBook\Models\Book;
+use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -13,6 +14,7 @@ class User extends Authenticatable implements TableInterface
 {
     use Notifiable;
     use SoftDeletes;
+    use FormAccessible;
 
     protected $dates = ['deleted_at'];
 
@@ -44,6 +46,11 @@ class User extends Authenticatable implements TableInterface
         return $this->belongsToMany(Role::class);
     }
 
+    public function formRolesAttribute()
+    {
+        return $this->pluck('id')->all();
+    }
+
     public static function generatePassword($password = null)
     {
         return !$password ? bcrypt(str_random(8)) : bcrypt($password);
@@ -56,7 +63,7 @@ class User extends Authenticatable implements TableInterface
      */
     public function getTableHeaders()
     {
-        return ['#', 'Nome', 'E-mail'];
+        return ['#', 'Nome', 'E-mail', 'Roles'];
     }
 
     /**
@@ -75,6 +82,8 @@ class User extends Authenticatable implements TableInterface
                 return $this->name;
             case 'E-mail':
                 return $this->email;
+            case 'Roles':
+                return $this->roles->implode('name', '|');
         }
     }
 

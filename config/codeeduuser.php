@@ -15,6 +15,9 @@ return [
         'password' => env('USER_PASSWORD', '123456')
     ],
     'acl' => [
-        'role_admin' => env('ROLE_ADMIN', 'Admin')
+        'role_admin' => env('ROLE_ADMIN', 'Admin'),
+        'controllers_annotations' => [
+            __DIR__.'/../Modules/CodeEduUser/Http/Controllers'
+        ]
     ]
 ];

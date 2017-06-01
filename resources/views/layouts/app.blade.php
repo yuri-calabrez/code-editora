@@ -25,7 +25,7 @@
     <?php
     $navbar = Navbar::withBrand(config('app.name'), url("/"))->inverse();
     if (Auth::check()) {
-        $links = Navigation::links([
+        $arrayLinks = [
             [
                 'link' => route('categories.index'),
                 'title' => 'Categorias'
@@ -43,7 +43,24 @@
                     ]
                 ]
             ]
-        ]);
+        ];
+
+        if(Auth::user()->can('user-admins/list')) {
+            $arrayLinks[] = [
+                'Usuários',
+                [
+                    [
+                        'link' => route('codeeduuser.users.index'),
+                        'title' => 'Usuários'
+                    ],
+                    [
+                        'link' => route('codeeduuser.roles.index'),
+                        'title' => 'Papel de usuário'
+                    ]
+                ]
+            ];
+        }
+        $links = Navigation::links($arrayLinks);
         $logout = Navigation::links([
             [
                 Auth::user()->name,
@@ -52,8 +69,8 @@
                         'link' => url("/logout"),
                         'title' => 'Sair',
                         'linkAttributes' => [
-                                'onclick' => "event.preventDefault();document.getElementById(\"logout-form\").submit();"
-                            ]
+                            'onclick' => "event.preventDefault();document.getElementById(\"logout-form\").submit();"
+                        ]
                     ]
                 ]
             ]
@@ -69,6 +86,12 @@
     @if(Session::has('message'))
         <div class="container">
             {!! Alert::success(Session::get('message')) !!}
+        </div>
+    @endif
+
+    @if(Session::has('error'))
+        <div class="container">
+            {!! Alert::danger(Session::get('error')) !!}
         </div>
     @endif
     @yield('content')

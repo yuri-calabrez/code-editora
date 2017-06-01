@@ -8,6 +8,7 @@
         "php": ">=5.6.4",
         "barryvdh/laravel-ide-helper": "^2.3",
         "caouecs/laravel-lang": "~3.0",
+        "doctrine/annotations": "1.4.0",
         "doctrine/dbal": "^2.5",
         "jrean/laravel-user-verification": "3.0.17",
         "laravel/framework": "5.3.*",

@@ -26,7 +26,8 @@ class UserRequest extends FormRequest
         $id = $this->route('user');
         return [
             'email' => "required|max:255|unique:users,email,{$id}",
-            'name' => "required|max:255"
+            'name' => "required|max:255",
+            'roles.*' => 'exists:roles,id'
         ];
     }
 }

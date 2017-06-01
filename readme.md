@@ -38,8 +38,18 @@ Nesta fase você deverá:
 
 Nesta fase, você deverá criar o módulo de administração de livros e categorias como demonstrado no capítulo.
 
-## Fase 7 - Cmeçando com Autorização
+## Fase 7 - Começando com Autorização
 
 Nesta fase você deve implementar a autorização da área administrativa mostrada no capítulo e também toda parte de ACL. Além disto implemente um CRUD de Roles (só admins podem cadastrar roles).
 
 O nome da Role deve ser único no banco de dados, então é necessário validar se o nome não existe e não deve ser permitido excluir a Role Admin padrão.
+
+## Fase 8 - Terminando Autorização
+
+Nesta fase você deverá fazer as seguintes tarefas
+* Terminar a autorização proposta no capítulo usando annotations.
+* Permitir o salvamento da desmarcação das permissões associadas aos pápeis de usuários.
+* Criar a autorização para o módulo de CodeEduBook, ou seja, criar permissões nos controllers/actions do módulo.
+* Criar uma migração no módulo de CodeEduBook para adicionar uma role "Autor" no banco de dados.
+
+Desafio (opcional): Criar um serviço com facade para montar o menu de usuário de acordo com as permissões dele.
