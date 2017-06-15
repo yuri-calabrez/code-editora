@@ -32,14 +32,16 @@ class AuthServiceProvider extends ServiceProvider
            }
         });
 
-        /** @var PermissionRepository $permissionRepository */
-        $permissionRepository = app(PermissionRepository::class);
-        $permissionRepository->pushCriteria(new FindPermissionsResouceCriteria());
-        $permissions = $permissionRepository->all();
-        foreach ($permissions as $p) {
-            \Gate::define("{$p->name}/{$p->resource_name}", function($user) use ($p){
-               return $user->hasRole($p->roles);
-            });
+        if(!app()->runningInConsole() || app()->runningUnitTests()) {
+            /** @var PermissionRepository $permissionRepository */
+            $permissionRepository = app(PermissionRepository::class);
+            $permissionRepository->pushCriteria(new FindPermissionsResouceCriteria());
+            $permissions = $permissionRepository->all();
+            foreach ($permissions as $p) {
+                \Gate::define("{$p->name}/{$p->resource_name}", function ($user) use ($p) {
+                    return $user->hasRole($p->roles);
+                });
+            }
         }
     }
 }

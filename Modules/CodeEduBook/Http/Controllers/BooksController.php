@@ -2,8 +2,10 @@
 
 namespace CodeEduBook\Http\Controllers;
 
+use CodeEduBook\Criteria\FindByAuthor;
 use CodeEduBook\Http\Requests\BookCreateRequest;
 use CodeEduBook\Http\Requests\BookUpdateRequest;
+use CodeEduBook\Models\Book;
 use CodeEduBook\Repositories\BookRepository;
 use Auth;
 use CodeEduBook\Repositories\CategoryRepository;
@@ -24,9 +26,10 @@ class BooksController extends Controller
      */
     private $categoryRepository;
 
-    function __construct(BookRepository $repository, CategoryRepository $categoryRepository)
+    public function __construct(BookRepository $repository, CategoryRepository $categoryRepository)
     {
         $this->repository = $repository;
+        $this->repository->pushCriteria(new FindByAuthor());
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -70,12 +73,11 @@ class BooksController extends Controller
 
     /**
      * @Permission\Action(name="update", description="Atualizar livros")
-     * @param $id
+     * @param Book $book
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(Book $book)
     {
-        $book = $this->repository->find($id);
         $this->categoryRepository->withTrashed();
         $categories = $this->categoryRepository->listsWithMutators('name_trashed', 'id');
         return view('codeedubook::books.edit', compact('book', 'categories'));
@@ -84,13 +86,14 @@ class BooksController extends Controller
     /**
      * @Permission\Action(name="update", description="Atualizar livros")
      * @param BookUpdateRequest $request
-     * @param $id
+     * @param Book $book
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(BookUpdateRequest $request, $id)
+    public function update(BookUpdateRequest $request, Book $book)
     {
         $data = $request->except('author_id');
-        $this->repository->update($data, $id);
+        $data['published'] = $request->get('published', false);
+        $this->repository->update($data, $book->id);
         $url = $request->get('redirectTo', route('books.index'));
         $request->session()->flash('message', 'Livro editado com sucesso!');
         return redirect()->to($url);
@@ -98,12 +101,12 @@ class BooksController extends Controller
 
     /**
      * @Permission\Action(name="destroy", description="Excluir livros")
-     * @param $id
+     * @param Book $book
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Book $book)
     {
-        $this->repository->delete($id);
+        $this->repository->delete($book->id);
         \Session::flash('message', 'Livro removido com sucesso!');
         return redirect()->to(\URL::previous());
     }

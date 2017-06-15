@@ -261,7 +261,8 @@ return [
         'Thumbnail' => Bootstrapper\Facades\Thumbnail::class,
         'Module' => Nwidart\Modules\Facades\Module::class,
         'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
-        'PermissionReader' => \CodeEduUser\Facade\PermissionReader::class
+        'PermissionReader' => \CodeEduUser\Facade\PermissionReader::class,
+        'NavbarAuthorization' => \CodeEduUser\Facade\NavbarAuthorization::class,
     ],
 
 ];

@@ -11,12 +11,19 @@ class BookPolicy
 {
     use HandlesAuthorization;
 
+    public function before($user, $ability)
+    {
+        if ($user->can(config('codeedubook.acl.permissions.book_manager_all'))) {
+            return true;
+        }
+    }
+
 
     /**
      * Determine whether the user can update the book.
      *
-     * @param  User  $user
-     * @param  Book  $book
+     * @param  User $user
+     * @param  Book $book
      * @return mixed
      */
     public function update(User $user, Book $book)

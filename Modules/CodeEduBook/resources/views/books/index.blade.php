@@ -19,6 +19,9 @@
         <div class="row">
             {!!
                 Table::withContents($books->items())->striped()
+                    ->callback('Capítulos', function($field, $book){
+                        return Button::normal('Capítulos')->asLinkTo(route('chapters.index', ['book' => $book->id]));
+                    })
                     ->callback('Editar', function ($field, $book){
                         return Button::primary('Editar')->asLinkTo(route('books.edit', ['book' => $book->id]));
                     })

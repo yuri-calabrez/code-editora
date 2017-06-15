@@ -28,39 +28,42 @@
         $arrayLinks = [
             [
                 'link' => route('categories.index'),
-                'title' => 'Categorias'
+                'title' => 'Categorias',
+                'permission' => 'categories-admin/list'
             ],
             [
                 'Livros',
                 [
                     [
                         'link' => route('books.index'),
-                        'title' => 'Listar'
+                        'title' => 'Listar',
+                        'permission' => 'books-admin/list'
                     ],
                     [
                         'link' => route('trashed.books.index'),
-                        'title' => 'Lixeira'
+                        'title' => 'Lixeira',
+                        'permission' => 'book-trahsed-admin/list'
+                    ]
+                ]
+            ],
+            [
+                'Usuários',
+                [
+                    [
+                        'link' => route('codeeduuser.users.index'),
+                        'title' => 'Usuários',
+                        'permission' => 'users-admin/list'
+                    ],
+                    [
+                        'link' => route('codeeduuser.roles.index'),
+                        'title' => 'Papel de usuário',
+                        'permission' => 'roles-admin/list'
                     ]
                 ]
             ]
         ];
 
-        if(Auth::user()->can('user-admins/list')) {
-            $arrayLinks[] = [
-                'Usuários',
-                [
-                    [
-                        'link' => route('codeeduuser.users.index'),
-                        'title' => 'Usuários'
-                    ],
-                    [
-                        'link' => route('codeeduuser.roles.index'),
-                        'title' => 'Papel de usuário'
-                    ]
-                ]
-            ];
-        }
-        $links = Navigation::links($arrayLinks);
+        $links = Navigation::links(\NavbarAuthorization::getLinksAuthorized($arrayLinks));
         $logout = Navigation::links([
             [
                 Auth::user()->name,
@@ -99,5 +102,6 @@
 
 <!-- Scripts -->
 <script src="/js/app.js"></script>
+@stack('scripts')
 </body>
 </html>

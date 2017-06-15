@@ -21,7 +21,12 @@ class Book extends Model implements TableInterface
         'title',
         'subtitle',
         'price',
-        'author_id'
+        'author_id',
+        'dedication',
+        'description',
+        'website',
+        'percent_complete',
+        'published'
     ];
 
     public function author()

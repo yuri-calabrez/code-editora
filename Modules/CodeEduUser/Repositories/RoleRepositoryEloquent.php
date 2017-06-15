@@ -24,15 +24,15 @@ class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 
     public function updatePermission(array $data, $id)
     {
-        $role = $this->find($id);
+        $model = $this->find($id);
 
-        $role->permissions()->detach();
+        $model->permissions()->detach();
 
         if(count($data)) {
-            $role->permissions()->sync($data);
+            $model->permissions()->sync($data);
         }
 
-        return $role;
+        return $model;
     }
 
     /**

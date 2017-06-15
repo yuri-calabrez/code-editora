@@ -2,6 +2,12 @@
 
 namespace CodeEduBook\Providers;
 
+use CodeEduBook\Repositories\BookRepository;
+use CodeEduBook\Repositories\BookRepositoryEloquent;
+use CodeEduBook\Repositories\CategoryRepository;
+use CodeEduBook\Repositories\CategoryRepositoryEloquent;
+use CodeEduBook\Repositories\ChapterRepository;
+use CodeEduBook\Repositories\ChapterRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -20,8 +26,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(\CodeEduBook\Repositories\CategoryRepository::class, \CodeEduBook\Repositories\CategoryRepositoryEloquent::class);
-        $this->app->bind(\CodeEduBook\Repositories\BookRepository::class, \CodeEduBook\Repositories\BookRepositoryEloquent::class);
+        $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
+        $this->app->bind(BookRepository::class, BookRepositoryEloquent::class);
+        $this->app->bind(ChapterRepository::class, ChapterRepositoryEloquent::class);
     }
 
     /**
