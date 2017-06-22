@@ -248,7 +248,6 @@ return [
         'Helpers' => Bootstrapper\Facades\Helpers::class,
         'Icon' => Bootstrapper\Facades\Icon::class,
         'InputGroup' => Bootstrapper\Facades\InputGroup::class,
-        'Image' => Bootstrapper\Facades\Image::class,
         'Label' => Bootstrapper\Facades\Label::class,
         'MediaObject' => Bootstrapper\Facades\MediaObject::class,
         'Modal' => Bootstrapper\Facades\Modal::class,
@@ -263,6 +262,7 @@ return [
         'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
         'PermissionReader' => \CodeEduUser\Facade\PermissionReader::class,
         'NavbarAuthorization' => \CodeEduUser\Facade\NavbarAuthorization::class,
+        'Image' => \Folklore\Image\Facades\Image::class,
     ],
 
 ];

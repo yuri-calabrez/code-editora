@@ -29,7 +29,7 @@
             [
                 'link' => route('categories.index'),
                 'title' => 'Categorias',
-                'permission' => 'categories-admin/list'
+                'permission' => 'category-admin/list'
             ],
             [
                 'Livros',
@@ -37,7 +37,7 @@
                     [
                         'link' => route('books.index'),
                         'title' => 'Listar',
-                        'permission' => 'books-admin/list'
+                        'permission' => 'book-admin/list'
                     ],
                     [
                         'link' => route('trashed.books.index'),
@@ -52,12 +52,12 @@
                     [
                         'link' => route('codeeduuser.users.index'),
                         'title' => 'Usuários',
-                        'permission' => 'users-admin/list'
+                        'permission' => 'user-admin/list'
                     ],
                     [
                         'link' => route('codeeduuser.roles.index'),
                         'title' => 'Papel de usuário',
-                        'permission' => 'roles-admin/list'
+                        'permission' => 'role-admin/list'
                     ]
                 ]
             ]

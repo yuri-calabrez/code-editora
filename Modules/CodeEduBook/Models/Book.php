@@ -3,8 +3,6 @@
 namespace CodeEduBook\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
-use CodeEduBook\Models\Category;
-use CodeEduUser\Models\User;
 use Collective\Html\Eloquent\FormAccessible;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,8 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Book extends Model implements TableInterface
 {
     use FormAccessible;
-
     use SoftDeletes;
+    use BookStorageTrait;
+    use BookThumbnailTrait;
 
     protected $dates = ['deleted_at'];
 
@@ -66,7 +65,12 @@ class Book extends Model implements TableInterface
             case '#':
                 return $this->id;
             case 'Título':
-                return $this->title;
+                if (file_exists($this->zip_file)) {
+                    $route = route('books.download', ['id' => $this->id]);
+                    return "<a href=\"{$route}\" target=\"_blank\" title=\"Download\">{$this->title}</a>";
+                } else {
+                    return $this->title;
+                }
             case 'Autor':
                 return $this->author->name;
             case 'Subtitulo':

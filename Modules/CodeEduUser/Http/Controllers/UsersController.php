@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use CodeEduUser\Annotations\Mapping as Permission;
 
 /**
- * @Permission\Controller(name="users-admin", description="Administração de usuários")
+ * @Permission\Controller(name="user-admin", description="Administração de usuários")
  */
 class UsersController extends Controller
 {

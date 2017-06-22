@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 use CodeEduUser\Annotations\Mapping as Permission;
 
 /**
- * @Permission\Controller(name="categories-admin", description="Admnistração de categorias")
+ * @Permission\Controller(name="chapter-admin", description="Administração de capítulos de livro")
  */
 class ChaptersController extends Controller
 {
@@ -36,7 +36,7 @@ class ChaptersController extends Controller
 
     /**
      * Display a listing of the resource.
-     * @Permission\Action(name="chapter", description="Capítulos")
+     * @Permission\Action(name="chapter", description="Listar capítulos")
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, Book $book)
@@ -49,7 +49,7 @@ class ChaptersController extends Controller
     }
 
     /**
-     * @Permission\Action(name="chapter", description="Capítulos")
+     * @Permission\Action(name="store", description="Criar capítulos")
      * Show the form for creating a new resource.
      * @return \Illuminate\Http\Response
      */
@@ -59,7 +59,7 @@ class ChaptersController extends Controller
     }
 
     /**
-     * @Permission\Action(name="chapter", description="Capítulos")
+     * @Permission\Action(name="store", description="Criar capítulos")
      * Store a newly created resource in storage.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -76,7 +76,7 @@ class ChaptersController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     * @Permission\Action(name="chapter", description="Capítulos")
+     * @Permission\Action(name="update", description="Editar capítulos")
      * @param Book $book
      * @param $chapterId
      * @return \Illuminate\Http\Response
@@ -90,7 +90,7 @@ class ChaptersController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @Permission\Action(name="chapter", description="Capítulos")
+     * @Permission\Action(name="update", description="Editar capítulos")
      * @param ChapterUpdateRequest $request
      * @param Book $book
      * @param $chapterId
@@ -108,7 +108,7 @@ class ChaptersController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @Permission\Action(name="chapter", description="Capítulos")
+     * @Permission\Action(name="destroy", description="Excluir capítulos")
      * @param Book $book
      * @param $chapterId
      * @return \Illuminate\Http\Response

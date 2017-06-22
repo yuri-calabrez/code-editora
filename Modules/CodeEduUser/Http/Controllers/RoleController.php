@@ -14,7 +14,7 @@ use Illuminate\Http\Response;
 use CodeEduUser\Annotations\Mapping as Permission;
 
 /**
- * @Permission\Controller(name="roles-admin", description="Administração de papéis de usuário")
+ * @Permission\Controller(name="role-admin", description="Administração de papéis de usuário")
  */
 class RoleController extends Controller
 {

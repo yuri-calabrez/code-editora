@@ -3,9 +3,12 @@
 namespace CodeEduBook\Http\Controllers;
 
 use CodeEduBook\Criteria\FindByAuthor;
+use CodeEduBook\Http\Requests\BookCoverRequest;
 use CodeEduBook\Http\Requests\BookCreateRequest;
 use CodeEduBook\Http\Requests\BookUpdateRequest;
+use CodeEduBook\Jobs\GenerateBook;
 use CodeEduBook\Models\Book;
+use CodeEduBook\Pub\BookCoverUpload;
 use CodeEduBook\Repositories\BookRepository;
 use Auth;
 use CodeEduBook\Repositories\CategoryRepository;
@@ -13,7 +16,7 @@ use Illuminate\Http\Request;
 use CodeEduUser\Annotations\Mapping as Permission;
 
 /**
- * @Permission\Controller(name="books-admin", description="Administração de livros")
+ * @Permission\Controller(name="book-admin", description="Administração de livros")
  */
 class BooksController extends Controller
 {
@@ -109,5 +112,49 @@ class BooksController extends Controller
         $this->repository->delete($book->id);
         \Session::flash('message', 'Livro removido com sucesso!');
         return redirect()->to(\URL::previous());
+    }
+
+    /**
+     * @Permission\Action(name="cover", description="Cover de livro")
+     * @param Book $book
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function coverForm(Book $book)
+    {
+        return view('codeedubook::books.cover', compact('book'));
+    }
+
+    /**
+     * @Permission\Action(name="cover", description="Cover de livro")
+     * @param BookCoverRequest $request
+     * @param Book $book
+     */
+    public function coverStore(BookCoverRequest $request, Book $book, BookCoverUpload $upload)
+    {
+        $upload->upload($book, $request->file('file'));
+        $url = $request->get('redirectTo', route('books.index'));
+        $request->session()->flash('message', 'Cover adicionado com sucesso!');
+        return redirect()->to($url);
+    }
+
+    /**
+     * @Permission\Action(name="export", description="Exportação de livro")
+     * @param Book $book
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function export(Book $book)
+    {
+        dispatch(new GenerateBook($book));
+        return redirect()->route('books.index');
+    }
+
+    /**
+     * @Permission\Action(name="download", description="Download de livro")
+     * @param Book $book
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    public function download(Book $book)
+    {
+        return response()->download($book->zip_file);
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use CodeEduUser\Annotations\Mapping as Permission;
 
 /**
- * @Permission\Controller(name="categories-admin", description="Admnistração de categorias")
+ * @Permission\Controller(name="category-admin", description="Admnistração de categorias")
  */
 class CategoriesController extends Controller
 {

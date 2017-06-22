@@ -19,8 +19,22 @@
         <div class="row">
             {!!
                 Table::withContents($books->items())->striped()
+                    ->callback('Exportar', function($field, $book){
+                        $exportFormId = "export-form-{$book->id}";
+                        $formExport = Form::open(['route' => ['books.export', 'book' => $book->id],
+                             'style' => 'display:none', 'id' => $exportFormId]).
+                             Form::close();
+
+                      return Button::success('Exportar')->asLinkTo(route('books.export', ['book' => $book->id]))
+                                ->addAttributes([
+                                    'onclick' => "event.preventDefault(); document.getElementById(\"{$exportFormId}\").submit();"
+                                ]).$formExport;
+                    })
                     ->callback('Capítulos', function($field, $book){
                         return Button::normal('Capítulos')->asLinkTo(route('chapters.index', ['book' => $book->id]));
+                    })
+                    ->callback('Cover', function($field, $book){
+                        return Button::warning('Cover')->asLinkTo(route('books.cover.create', ['book' => $book->id]));
                     })
                     ->callback('Editar', function ($field, $book){
                         return Button::primary('Editar')->asLinkTo(route('books.edit', ['book' => $book->id]));
