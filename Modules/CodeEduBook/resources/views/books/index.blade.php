@@ -9,10 +9,10 @@
         <br>
         <div class="row">
             {!! Form::model(compact('search'), ['method' => 'GET', 'class' => 'form-inline']) !!}
-                {!! Form::label('search', 'Pesquisar por título:', ['class' => 'control-label']) !!}
-                {!! Form::text('search', null, ['class' => 'form-control']) !!}
+            {!! Form::label('search', 'Pesquisar por título:', ['class' => 'control-label']) !!}
+            {!! Form::text('search', null, ['class' => 'form-control']) !!}
 
-                {!! Button::primary('Pesquisar')->submit() !!}
+            {!! Button::primary('Pesquisar')->submit() !!}
             {!! Form::close() !!}
         </div>
 
@@ -20,15 +20,12 @@
             {!!
                 Table::withContents($books->items())->striped()
                     ->callback('Exportar', function($field, $book){
-                        $exportFormId = "export-form-{$book->id}";
-                        $formExport = Form::open(['route' => ['books.export', 'book' => $book->id],
-                             'style' => 'display:none', 'id' => $exportFormId]).
-                             Form::close();
+                        $routeExport = route('books.export', ['book' => $book->id]);
 
                       return Button::success('Exportar')->asLinkTo(route('books.export', ['book' => $book->id]))
                                 ->addAttributes([
-                                    'onclick' => "event.preventDefault(); document.getElementById(\"{$exportFormId}\").submit();"
-                                ]).$formExport;
+                                    'onclick' => "event.preventDefault();exportBook(\"$routeExport\")"
+                                ]);
                     })
                     ->callback('Capítulos', function($field, $book){
                         return Button::normal('Capítulos')->asLinkTo(route('chapters.index', ['book' => $book->id]));
@@ -58,3 +55,18 @@
 
 
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+    function exportBook(route) {
+        window.$.ajax({
+            url: route,
+            type: 'POST',
+            data: {_token: window.Laravel.csrfToken},
+            success: function (data) {
+                window.$.notify({message: "O processo de exportação foi iniciado"});
+            }
+        });
+    }
+</script>
+@endpush

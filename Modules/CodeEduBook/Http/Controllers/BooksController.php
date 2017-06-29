@@ -8,6 +8,7 @@ use CodeEduBook\Http\Requests\BookCreateRequest;
 use CodeEduBook\Http\Requests\BookUpdateRequest;
 use CodeEduBook\Jobs\GenerateBook;
 use CodeEduBook\Models\Book;
+use CodeEduBook\Notifications\BookExported;
 use CodeEduBook\Pub\BookCoverUpload;
 use CodeEduBook\Repositories\BookRepository;
 use Auth;
@@ -144,7 +145,8 @@ class BooksController extends Controller
      */
     public function export(Book $book)
     {
-        dispatch(new GenerateBook($book));
+        //dispatch(new GenerateBook($book));
+        \Auth::user()->notify(new BookExported(\Auth::user(), $book));
         return redirect()->route('books.index');
     }
 
