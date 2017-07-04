@@ -29,9 +29,13 @@
 
         <aside class="col-md-4 text-center">
             <div class="col-md-5 col-md-offset-1">
-                <p class="price">R$: {{$product->price}}</p>
+                <p class="price">$: {{$product->price}}</p>
             </div>
-            <div class="pull-right"></div>
+            <div class="pull-right">
+                <a href="{{route('store.checkout', ['product' => $product->id])}}" class="btn btn-success btn-cpr">
+                    Comprar
+                </a>
+            </div>
             <div class="col-md-12">
                 <hr>
                 <p>

@@ -11,5 +11,6 @@ interface ProductRepository extends RepositoryInterface, RepositoryCriteriaInter
     public function home();
     public function findByCategory($categoryId);
     public function findBySlug($slug);
+    public function makeProductStore($id);
     public function like($search);
 }

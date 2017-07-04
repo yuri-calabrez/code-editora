@@ -145,7 +145,7 @@ class BooksController extends Controller
      */
     public function export(Book $book)
     {
-        //dispatch(new GenerateBook($book));
+        dispatch(new GenerateBook($book));
         \Auth::user()->notify(new BookExported(\Auth::user(), $book));
         return redirect()->route('books.index');
     }
@@ -158,5 +158,14 @@ class BooksController extends Controller
     public function download(Book $book)
     {
         return response()->download($book->zip_file);
+    }
+
+    public function downloadCommon($id)
+    {
+        $book = $this->repository->find($id);
+        if(\Gate::allows('book-download', $book->id)) {
+            return $this->download($book);
+        }
+        abort(404);
     }
 }

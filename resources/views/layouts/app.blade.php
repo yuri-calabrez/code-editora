@@ -71,6 +71,10 @@
                 Auth::user()->name,
                 [
                     [
+                        'link' => route('store.orders'),
+                        'title' => 'Minhas compras',
+                    ],
+                    [
                         'link' => url("/logout"),
                         'title' => 'Sair',
                         'linkAttributes' => [

@@ -14,3 +14,5 @@ Route::group(['middleware' => ['auth', config('codeeduuser.middleware.isVerified
         Route::resource('books', 'BooksTrashedController', ['only' => ['index', 'show', 'update']]);
     });
 });
+
+Route::get('books/{id}/download-common', 'BooksController@downloadCommon')->name('books.download-common');
