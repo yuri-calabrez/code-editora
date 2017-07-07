@@ -2,6 +2,10 @@
 
 namespace CodePub\Providers;
 
+use CodeEduBook\Events\BookPreIndexEvent;
+use CodeEduStore\Events\OrderPostProcessEvent;
+use CodePub\Listeners\BookMakeTotal;
+use CodePub\Listeners\BookRankingUpdate;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,8 +17,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'CodePub\Events\SomeEvent' => [
-            'CodePub\Listeners\EventListener',
+        BookPreIndexEvent::class => [
+          BookMakeTotal::class
+        ],
+        OrderPostProcessEvent::class => [
+          BookRankingUpdate::class
         ],
     ];
 

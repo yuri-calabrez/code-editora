@@ -63,3 +63,12 @@ Nesta fase você deverá fazer as seguintes tarefas:
 * Permitir o download do livro no painel administrativo.
 * Incluir uma permissão de exportação de livro para a role Author.
 * Incluir um livro exportado de exemplo em pdf na raiz da aplicação.
+
+## Fase 10 - Concluída a Editora
+
+
+Nesta fase você deverá 3 tarefas:
+
+* Criar o sistema de notificações de publicação de livros usando os canais de e-mail e pusher
+* Criar a loja, bem como toda estrutura de pagamento e ainda listar as orders do usuário (pesquise na página: https://laravel.com/docs/5.4/billing#invoices), rotas deverá ser /my/invoices. Acrescente a opção no menu que tem o logout. Liste todas os livros comprados e permita o download sob a rota /my/books
+* Implemente a integração com Laravel Scout

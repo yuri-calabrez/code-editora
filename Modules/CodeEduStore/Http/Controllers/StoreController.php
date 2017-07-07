@@ -86,9 +86,17 @@ class StoreController extends Controller
         return view('codeedustore::store.process', compact('order', 'status'));
     }
 
-    public function orders()
+    public function orders(Request $request)
     {
-        $orders = $this->orderRepository->all();
+        $user = $request->user();
+        $orders = $this->orderRepository->findByField('user_id', $user->id);
         return view('codeedustore::store.orders', compact('orders'));
+    }
+
+    public function invoices(Request $request)
+    {
+        $user = $request->user();
+        $invoices = $user->invoices();
+        return view('codeedustore::store.invoices', compact('invoices'));
     }
 }

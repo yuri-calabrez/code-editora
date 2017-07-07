@@ -3,11 +3,13 @@
 namespace CodeEduBook\Models;
 
 use Bootstrapper\Interfaces\TableInterface;
+use CodeEduBook\Events\BookPreIndexEvent;
 use Collective\Html\Eloquent\FormAccessible;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Book extends Model implements TableInterface
 {
@@ -17,6 +19,7 @@ class Book extends Model implements TableInterface
     use BookThumbnailTrait;
     use Sluggable;
     use SluggableScopeHelpers;
+    use Searchable;
 
     protected $dates = ['deleted_at'];
 
@@ -31,6 +34,17 @@ class Book extends Model implements TableInterface
         'percent_complete',
         'published'
     ];
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $event = new BookPreIndexEvent($this);
+        event($event);
+
+        $array = array_merge($array, ['ranking' => $event->getRanking()]);
+        return $array;
+    }
 
     public function author()
     {

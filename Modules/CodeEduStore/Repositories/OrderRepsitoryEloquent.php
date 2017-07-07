@@ -9,6 +9,7 @@
 namespace CodeEduStore\Repositories;
 
 
+use CodeEduStore\Events\OrderPostProcessEvent;
 use CodeEduStore\Models\Order;
 use CodeEduStore\Models\ProductStore;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -47,6 +48,7 @@ class OrderRepsitoryEloquent extends BaseRepository implements OrderRepository
         ]);
         $order->orderable()->associate($productStore->getOriginalProduct());
         $order->save();
+        event(new OrderPostProcessEvent($order));
         return $order;
     }
 

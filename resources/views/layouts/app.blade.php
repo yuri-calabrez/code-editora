@@ -75,6 +75,10 @@
                         'title' => 'Minhas compras',
                     ],
                     [
+                        'link' => route('store.invoices'),
+                        'title' => 'Minhas faturas'
+                    ],
+                    [
                         'link' => url("/logout"),
                         'title' => 'Sair',
                         'linkAttributes' => [
@@ -95,7 +99,7 @@
 
         $menuRight = Navigation::pills([
             [
-                'link' => url("/logout"),
+                'link' => "#",
                 'title' => 'Registrar',
                 'linkAttributes' => [
                     'class' => "btnnew btnnew-default"

@@ -5,6 +5,7 @@ namespace CodeEduBook\Providers;
 use Folklore\Image\ImageServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Cviebrock\EloquentSluggable\ServiceProvider as SluggableServiceProvider;
+use Laravel\Scout\ScoutServiceProvider;
 
 class CodeEduBookServiceProvider extends ServiceProvider
 {
@@ -41,6 +42,7 @@ class CodeEduBookServiceProvider extends ServiceProvider
         $this->app->register(AuthServiceProvider::class);
         $this->app->register(ImageServiceProvider::class);
         $this->app->register(SluggableServiceProvider::class);
+        $this->app->register(ScoutServiceProvider::class);
     }
 
     /**
